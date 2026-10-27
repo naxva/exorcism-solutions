@@ -1,0 +1,14 @@
+import re
+
+
+class Luhn:
+    def __init__(self, card_num):
+        self.card_num = re.sub(' ', '', card_num)
+
+    def valid(self):
+        if len(self.card_num) <= 1 or not all(i.isnumeric() for i in self.card_num):
+            return False
+        res = [int(i) for i in self.card_num]
+        res[-2::-2] = [2*i - 9*(i>=5) for i in res[-2::-2]]
+
+        return not (sum(res) % 10)
